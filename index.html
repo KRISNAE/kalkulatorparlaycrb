@@ -19,6 +19,7 @@
             --accent-light: #a78bfa;
             --accent-dark: #6d28d9;
             --accent-glow: rgba(139, 92, 246, 0.3);
+            --accent-glow-strong: rgba(139, 92, 246, 0.6);
             --text-primary: #f5f3ff;
             --text-secondary: #c4b5fd;
             --text-muted: #8b7bb8;
@@ -52,11 +53,11 @@
         }
 
         .bg-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: -1;
-    background: rgba(15, 5, 24, 0.4);
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: rgba(15, 5, 24, 0.4);
         }
 
         .bg-animation {
@@ -111,6 +112,54 @@
 
         .logo-section img:hover { transform: scale(1.05); }
 
+        /* ===== LOGIN BUTTON ===== */
+        .login-section {
+            text-align: center;
+            margin: 20px 0 10px;
+        }
+
+        .btn-login {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4), 0 0 40px rgba(139, 92, 246, 0.15);
+        }
+
+        .btn-login::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: rgba(255,255,255,0.15);
+            transition: left 0.5s ease;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 35px rgba(139, 92, 246, 0.6), 0 0 60px rgba(139, 92, 246, 0.25);
+            background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+        }
+
+        .btn-login:hover::before { left: 100%; }
+        .btn-login:active { transform: translateY(-1px) scale(0.98); }
+        .btn-login i { font-size: 16px; }
+
+        /* ===== TABS CONTAINER ===== */
         .tabs-container {
             display: flex;
             justify-content: center;
@@ -124,6 +173,7 @@
             margin-left: auto;
             margin-right: auto;
             backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 30px rgba(139, 92, 246, 0.05);
         }
 
         .tab-btn {
@@ -163,7 +213,7 @@
         .tab-btn.active::before {
             opacity: 1;
             transform: scale(1);
-            box-shadow: 0 4px 20px var(--accent-glow);
+            box-shadow: 0 4px 20px var(--accent-glow), 0 0 30px rgba(139, 92, 246, 0.2);
         }
 
         .tab-btn span { position: relative; z-index: 1; }
@@ -180,6 +230,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* ===== CARD WITH GLOWSY EFFECTS ===== */
         .card {
             background: var(--bg-card);
             border-radius: 20px;
@@ -187,13 +238,37 @@
             margin-bottom: 24px;
             border: 1px solid var(--border-color);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, transparent 40%, rgba(139, 92, 246, 0.15) 50%, transparent 60%);
+            border-radius: 22px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            animation: borderGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
         }
 
         .card:hover {
             border-color: var(--border-hover);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(139, 92, 246, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 40px rgba(139, 92, 246, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .card:hover::before {
+            opacity: 1;
         }
 
         .card-header {
@@ -214,7 +289,13 @@
             justify-content: center;
             font-size: 20px;
             color: #fff;
-            box-shadow: 0 4px 15px var(--accent-glow);
+            box-shadow: 0 4px 15px var(--accent-glow), 0 0 20px rgba(139, 92, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-icon {
+            box-shadow: 0 4px 20px var(--accent-glow-strong), 0 0 30px rgba(139, 92, 246, 0.3);
+            transform: scale(1.05);
         }
 
         .card-title {
@@ -262,7 +343,7 @@
 
         .form-input:focus {
             border-color: var(--accent);
-            box-shadow: 0 0 0 4px var(--accent-glow), 0 0 20px rgba(139, 92, 246, 0.1);
+            box-shadow: 0 0 0 4px var(--accent-glow), 0 0 25px rgba(139, 92, 246, 0.15);
         }
 
         .form-input::placeholder { color: var(--text-muted); font-weight: 400; }
@@ -285,6 +366,7 @@
             position: relative;
             overflow: hidden;
             backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.1), inset 0 0 20px rgba(139, 92, 246, 0.02);
         }
 
         .result-box::before {
@@ -293,7 +375,22 @@
             top: 0; left: 0; right: 0;
             height: 3px;
             background: var(--accent);
-            box-shadow: 0 0 20px var(--accent-glow);
+            box-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .result-box::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
+            animation: resultPulse 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes resultPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
         }
 
         .result-header {
@@ -306,6 +403,8 @@
             color: var(--accent-light);
             text-transform: uppercase;
             letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
         }
 
         .result-item {
@@ -314,6 +413,8 @@
             align-items: center;
             padding: 14px 0;
             border-bottom: 1px solid var(--border-color);
+            position: relative;
+            z-index: 1;
         }
 
         .result-item:last-child { border-bottom: none; }
@@ -334,7 +435,7 @@
         .result-value.highlight {
             color: var(--success);
             font-size: 28px;
-            text-shadow: 0 0 20px rgba(52, 211, 153, 0.3);
+            text-shadow: 0 0 20px rgba(52, 211, 153, 0.3), 0 0 40px rgba(52, 211, 153, 0.1);
         }
 
         .info-grid {
@@ -349,13 +450,30 @@
             border: 1px solid var(--border-color);
             border-radius: 14px;
             padding: 20px;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(139, 92, 246, 0.08) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .info-card:hover::before {
+            opacity: 1;
         }
 
         .info-card:hover {
             border-color: var(--border-hover);
-            transform: translateY(-2px);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 30px rgba(139, 92, 246, 0.08);
         }
 
         .info-card-header {
@@ -363,6 +481,8 @@
             align-items: center;
             gap: 10px;
             margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
         }
 
         .info-card-icon {
@@ -372,6 +492,12 @@
             align-items: center;
             justify-content: center;
             font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover .info-card-icon {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px currentColor;
         }
 
         .info-card-icon.success { background: var(--success-bg); color: var(--success); }
@@ -383,12 +509,16 @@
             font-size: 14px;
             font-weight: 700;
             color: var(--text-primary);
+            position: relative;
+            z-index: 1;
         }
 
         .info-card-text {
             font-size: 13px;
             color: var(--text-secondary);
             line-height: 1.7;
+            position: relative;
+            z-index: 1;
         }
 
         .formula-box {
@@ -401,6 +531,12 @@
             font-size: 13px;
             color: var(--accent-light);
             line-height: 1.8;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover .formula-box {
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.05);
         }
 
         .formula-box .highlight-num { color: var(--success); font-weight: 700; }
@@ -412,11 +548,32 @@
             border-radius: 14px;
             padding: 20px;
             margin-bottom: 16px;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
         }
 
-        .parlay-section:hover { border-color: var(--border-hover); }
+        .parlay-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; height: 100%;
+            background: var(--accent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .parlay-section:hover {
+            border-color: var(--border-hover);
+            transform: translateX(4px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 20px rgba(139, 92, 246, 0.05);
+        }
+
+        .parlay-section:hover::before {
+            opacity: 1;
+        }
 
         .parlay-header {
             display: flex;
@@ -435,7 +592,13 @@
             font-weight: 800;
             font-size: 14px;
             color: #fff;
-            box-shadow: 0 4px 12px var(--accent-glow);
+            box-shadow: 0 4px 12px var(--accent-glow), 0 0 20px rgba(139, 92, 246, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .parlay-section:hover .parlay-number {
+            box-shadow: 0 4px 20px var(--accent-glow-strong), 0 0 30px rgba(139, 92, 246, 0.25);
+            transform: scale(1.1);
         }
 
         .parlay-title {
@@ -455,7 +618,7 @@
         .btn-calculate {
             width: 100%;
             padding: 18px;
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
             color: #fff;
             border: none;
             border-radius: 14px;
@@ -469,6 +632,7 @@
             margin-top: 16px;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4), 0 0 30px rgba(139, 92, 246, 0.1);
         }
 
         .btn-calculate::before {
@@ -481,9 +645,9 @@
         }
 
         .btn-calculate:hover {
-            background: var(--accent-dark);
+            background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%);
             transform: translateY(-2px);
-            box-shadow: 0 8px 30px var(--accent-glow);
+            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.6), 0 0 50px rgba(139, 92, 246, 0.2);
         }
 
         .btn-calculate:hover::before { left: 100%; }
@@ -506,6 +670,13 @@
             border-radius: 10px;
             border: 1px solid var(--border-color);
             backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .legend-item:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 15px rgba(139, 92, 246, 0.05);
         }
 
         .legend-badge {
@@ -513,6 +684,12 @@
             border-radius: 6px;
             font-size: 12px;
             font-weight: 800;
+            transition: all 0.3s ease;
+        }
+
+        .legend-item:hover .legend-badge {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px currentColor;
         }
 
         .legend-badge.w { background: var(--success-bg); color: var(--success); }
@@ -539,6 +716,7 @@
             margin-bottom: 16px;
             padding-bottom: 12px;
             border-bottom: 1px solid var(--border-color);
+            text-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
         }
 
         .notes-title i { color: var(--accent); }
@@ -551,7 +729,7 @@
             font-weight: 500;
         }
 
-        .footer-brand { color: var(--accent-light); font-weight: 700; }
+        .footer-brand { color: var(--accent-light); font-weight: 700; text-shadow: 0 0 10px rgba(139, 92, 246, 0.2); }
 
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-primary); }
@@ -564,6 +742,7 @@
             .card { padding: 20px; }
             .info-grid { grid-template-columns: 1fr; }
             .legend-grid { grid-template-columns: 1fr 1fr; }
+            .btn-login { padding: 12px 24px; font-size: 14px; }
         }
 
         .hint {
@@ -584,6 +763,8 @@
             color: var(--text-muted) !important;
         }
     </style>
+    <link rel="icon" type="image/png" href="http://plcl.me/images/3Evcd.png">
+<base target="_blank">
 </head>
 <body>
     <div class="bg-image"></div>
@@ -593,6 +774,13 @@
     <div class="container">
         <div class="logo-section">
             <img src="https://plcl.me/images/7XJ4J.gif" alt="VPN Ceria Logo">
+        </div>
+
+        <!-- LOGIN BUTTON -->
+        <div class="login-section">
+            <a href="https://access.vpnceria.life/ceriabet-login" target="_blank" class="btn-login">
+                <i class="fas fa-sign-in-alt"></i> Login Ceriabet
+            </a>
         </div>
 
         <div class="tabs-container">
@@ -1423,6 +1611,17 @@
             if (isNaN(num) || num === 0) return 'Rp 0';
             return 'Rp ' + num.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
         }
+
+        // Mouse tracking for info-card glow effect
+        document.querySelectorAll('.info-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                card.style.setProperty('--mouse-x', x + '%');
+                card.style.setProperty('--mouse-y', y + '%');
+            });
+        });
 
         updateParlayRows();
     </script>
